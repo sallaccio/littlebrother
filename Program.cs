@@ -74,9 +74,14 @@ namespace SmallBrother
         {
             theTimer.Tick -= new EventHandler(ProjectForm);
             theTimer.Stop();
-            string test = "Small brother is watching you: Don't forget to choose a project.";
-            string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
-            new MessageForm(test, taskNames, TimerFile.getLastItem()).Show();
+
+            string lastProj;
+            if (!TimerFile.getLastItem(out lastProj))
+            {
+                string test = "Small brother is watching you: Don't forget to choose a project.";
+                string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
+                new MessageForm(test, taskNames, TimerFile.getLastItem()).Show();
+            }
         }
 
     }
