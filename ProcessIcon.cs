@@ -43,8 +43,9 @@ namespace SmallBrother
 
             // Allow it react to mouse clicks.	
             ni.MouseClick += new MouseEventHandler(ni_MouseClick);
-			// Attach a context menu.
-			ni.ContextMenuStrip = new ContextMenus().Create();
+            ni.MouseMove += new MouseEventHandler(ni_MouseOver);
+            // Attach a context menu.
+            ni.ContextMenuStrip = new ContextMenus().Create();
             ni.ContextMenuStrip.Opening += ContextMenuStrip_Opening;
 		}
 
@@ -73,6 +74,21 @@ namespace SmallBrother
 				Process.Start("explorer", null);
 			}
 		}
+
+        /// <summary>
+        /// Handles mouse hover event: displays current project.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
+        /// <remarks>Should bring some kind of Property Window.</remarks>
+        void ni_MouseOver(object sender, MouseEventArgs e)
+        {
+            string current;
+            if (TimerFile.getLastItem(out current))
+                ni.Text = "[  " + current + "  ]";
+            else
+                ni.Text = "Simply record what task you work on.";
+        }
 
         /// <summary>
         /// Handles the creation of the menu of the ni control on open (right click).
