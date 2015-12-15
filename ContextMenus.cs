@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using IniController;
+using Helpers;
 
 namespace SmallBrother
 {
@@ -45,6 +46,7 @@ namespace SmallBrother
             ToolStripSeparator sep;
 
             string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
+            string[] intervals = Ini.GetStringArray(Program.secManualReminder, Program.paramsIntervals, "10 mins");
             Color activeTaskColor = ColorHelper.color(Ini.GetString(Program.secColors, "ActiveTask", "150,150,150"));
             string actualTask;
             bool actual = TimerFile.getLastItem(out actualTask);
@@ -69,7 +71,7 @@ namespace SmallBrother
 
             // Textbox for adding new project
             newItemBox = new ToolStripTextBox("NewProject");
-            newItemBox.Text = TextBoxProperties.WatermarkText;
+            newItemBox.Text = TextBoxProperties.NewProjectWatermarkText;
             newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
             newItemBox.KeyUp += new KeyEventHandler(NewItem_KeyUp);
             newItemBox.MouseEnter += new EventHandler(NewItem_MouseEnter);
@@ -86,6 +88,31 @@ namespace SmallBrother
             item.Click += new EventHandler(Pause_Click);
             //item.Image = Resources.Pause;
             menu.Items.Add(item);
+
+            // Pause and remind.
+            item = new ToolStripMenuItem();
+            item.Text = "Pause and remind in...";
+            //item.Image = Resources.Pause;
+            menu.Items.Add(item);
+            ToolStripMenuItem subItem;
+            foreach (string interval in intervals)
+            {
+                if (interval != "")
+                {
+                    subItem = new ToolStripMenuItem();
+                    subItem.Text = interval;
+                    subItem.Click += new EventHandler(PauseAndRemindIn_Click);
+                    item.DropDownItems.Add(subItem);
+                }
+            }
+            // Textbox for adding new project
+            newItemBox = new ToolStripTextBox("How long?");
+            newItemBox.Text = TextBoxProperties.NewIntervalWatermarkText;
+            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
+            newItemBox.KeyUp += new KeyEventHandler(NewInterval_KeyUp);
+            newItemBox.MouseEnter += new EventHandler(NewInterval_MouseEnter);
+            newItemBox.MouseLeave += new EventHandler(NewInterval_MouseLeave);
+            item.DropDownItems.Add(newItemBox);
 
             // Separator.
             sep = new ToolStripSeparator();
@@ -131,14 +158,14 @@ namespace SmallBrother
             item = new ToolStripMenuItem();
             item.Text = "Files...";
             menu.Items.Add(item);
-            ToolStripMenuItem subItem = new ToolStripMenuItem();
+            subItem = new ToolStripMenuItem();
             subItem.Text = "Settings";
             subItem.Click += new EventHandler(Open_Click);
             item.DropDownItems.Add(subItem);
-            ToolStripMenuItem subItem2 = new ToolStripMenuItem();
-            subItem2.Text = "Time file";
-            subItem2.Click += new EventHandler(Open_Click);
-            item.DropDownItems.Add(subItem2);
+            subItem = new ToolStripMenuItem();
+            subItem.Text = "Time file";
+            subItem.Click += new EventHandler(Open_Click);
+            item.DropDownItems.Add(subItem);
 
             // Separator.
             sep = new ToolStripSeparator();
@@ -192,6 +219,11 @@ namespace SmallBrother
 
         #region NewItem events
 
+        /// <summary>
+        /// Handles the Enter key event for the textbox of a new project
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void NewItem_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -208,7 +240,7 @@ namespace SmallBrother
         /// </summary>
         void NewItem_MouseEnter(object sender, EventArgs e)
         {
-            if (((ToolStripTextBox)sender).Text == TextBoxProperties.WatermarkText)
+            if (((ToolStripTextBox)sender).Text == TextBoxProperties.NewProjectWatermarkText)
             {
                 ((ToolStripTextBox)sender).Text = "";
                 ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.NewItemTextColor;
@@ -224,7 +256,7 @@ namespace SmallBrother
             {
                 ((ContextMenuStrip)(((ToolStripTextBox)sender).Owner)).Focus();
                 ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.WatermarkTextColor;
-                ((ToolStripTextBox)sender).Text = TextBoxProperties.WatermarkText;
+                ((ToolStripTextBox)sender).Text = TextBoxProperties.NewProjectWatermarkText;
             }
                 
         }
@@ -244,6 +276,65 @@ namespace SmallBrother
         }
 
         #endregion Pause events
+
+        #region Pause And Remind In events
+
+        /// <summary>
+        /// Handles the Click event of the Pause And Remind control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void PauseAndRemindIn_Click(object sender, EventArgs e)
+        {
+            TimerFile.addEndItem();
+            string newInterval = ((ToolStripMenuItem)sender).Text;
+            Program.LaunchProjectFormIn(HTime.inMilliseconds(newInterval));
+        }
+
+        /// <summary>
+        /// Handles the Enter key event for the textbox of a new time interval for manual reminder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void NewInterval_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+
+                TimerFile.addEndItem();
+                string newInterval = ((ToolStripTextBox)sender).Text;
+                Program.LaunchProjectFormIn(HTime.inMilliseconds(newInterval));
+                ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
+            }
+        }
+
+        /// <summary>
+        /// On mouse enter, if default text, remove it and change text color.
+        /// </summary>
+        void NewInterval_MouseEnter(object sender, EventArgs e)
+        {
+            if (((ToolStripTextBox)sender).Text == TextBoxProperties.NewIntervalWatermarkText)
+            {
+                ((ToolStripTextBox)sender).Text = "";
+                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.NewItemTextColor;
+            }
+        }
+
+        /// <summary>
+        /// On mouse leave, if no text was entered, unfocus and reset default text and color.
+        /// </summary>
+        void NewInterval_MouseLeave(object sender, EventArgs e)
+        {
+            if (((ToolStripTextBox)sender).Text == "")
+            {
+                ((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).Focus();
+                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.WatermarkTextColor;
+                ((ToolStripTextBox)sender).Text = TextBoxProperties.NewIntervalWatermarkText;
+            }
+
+        }
+
+        #endregion Pause And Remind In events
 
         #region RemoveTask events
 
@@ -389,9 +480,10 @@ namespace SmallBrother
 
     struct TextBoxProperties
     {
-        public static string WatermarkText = "Add project...";
+        public static string NewProjectWatermarkText = "Add project...";
+        public static string NewIntervalWatermarkText = "How long?";
+        public static string ClearText = "";
         public static Color WatermarkTextColor = ColorHelper.color("200,200,200");
-        public static string NewItemText = "";
         public static Color NewItemTextColor = ColorHelper.color("0,0,0");
     }
 }

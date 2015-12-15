@@ -23,16 +23,22 @@ namespace SmallBrother
 
         public const string confFolder = "ConfFiles";
         public const string iniFile = confFolder + "\\SmallBro.ini";
+
+        // Sections
         public const string secGeneral = "General";
         public const string secColors = "Colors";
+        public const string secManualReminder = "ManualReminder";
+
+        // Keys
         public const string paramTaskNames = "TaskNames";
+        public const string paramsIntervals = "Intervals";
 
         #endregion
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
 		static void Main()
 		{
 			Application.EnableVisualStyles();
