@@ -798,6 +798,7 @@ namespace IniController
 
     #region Exceptions
 
+    [Serializable]
     public class FileNotDefinedException : Exception
     {
         public FileNotDefinedException()

@@ -32,6 +32,8 @@ namespace SmallBrother
         // Keys
         public const string paramTaskNames = "TaskNames";
         public const string paramsIntervals = "Intervals";
+        public const string paramsMaxItems = "MaxItems";
+        public const string paramsOrder = "Order";
 
         #endregion
 

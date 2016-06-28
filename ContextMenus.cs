@@ -45,15 +45,48 @@ namespace SmallBrother
             ToolStripTextBox newItemBox;
             ToolStripSeparator sep;
 
-            string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
-            string[] intervals = Ini.GetStringArray(Program.secManualReminder, Program.paramsIntervals, "10 mins");
-            Color activeTaskColor = ColorHelper.color(Ini.GetString(Program.secColors, "ActiveTask", "150,150,150"));
+            // Task list in desired order + current task if relevant
+            string[] taskNames = getTaskNames();
+            int numberOfTasks = taskNames.Length;
             string actualTask;
             bool actual = TimerFile.getLastItem(out actualTask);
-       
+
+            string[] intervals = Ini.GetStringArray(Program.secManualReminder, Program.paramsIntervals, "10 mins");
+            int maxItemsInList = Ini.GetInt(Program.secGeneral, Program.paramsMaxItems, numberOfTasks);
+            if (maxItemsInList <= 0)
+                maxItemsInList = numberOfTasks;
+
             // Actually creating the menu
-            foreach (string taskName in taskNames)
+            ToolStripMenuItem startOfList = new ToolStripMenuItem();
+            startOfList.Text = "More...";
+            startOfList.Font = new Font(startOfList.Font, FontStyle.Italic);
+            if (numberOfTasks > maxItemsInList)
+                menu.Items.Add(startOfList);
+
+            int i;
+            for (i = 0; i < numberOfTasks - maxItemsInList; i++)
             {
+                string taskName = taskNames[i];
+                if (taskName != "")
+                {
+                    item = new ToolStripMenuItem();
+                    item.Text = taskName;
+                    if (actual && taskName.Equals(actualTask))
+                    {
+                        setItemActive(item);
+                        menu.Items.Add(item);
+                    }
+                    else
+                    {
+                        item.Font = new Font(item.Font, FontStyle.Regular);
+                        item.Click += new EventHandler(Task_Click);
+                        startOfList.DropDownItems.Add(item);
+                    }
+                }
+            }
+            for (; i < numberOfTasks; i++)
+            {
+                string taskName = taskNames[i];
                 if (taskName != "")
                 {
                     item = new ToolStripMenuItem();
@@ -62,10 +95,7 @@ namespace SmallBrother
                     menu.Items.Add(item);
 
                     if (actual && taskName.Equals(actualTask))
-                    {
-                        item.Font = new Font(item.Font, FontStyle.Bold);
-                        item.BackColor = activeTaskColor;
-                    }
+                        setItemActive(item);
                 }
             }
 
@@ -155,6 +185,7 @@ namespace SmallBrother
             sep = new ToolStripSeparator();
             menu.Items.Add(sep);
 
+            // Files
             item = new ToolStripMenuItem();
             item.Text = "Files...";
             menu.Items.Add(item);
@@ -165,6 +196,34 @@ namespace SmallBrother
             subItem = new ToolStripMenuItem();
             subItem.Text = "Time file";
             subItem.Click += new EventHandler(Open_Click);
+            item.DropDownItems.Add(subItem);
+
+            // Separator.
+            sep = new ToolStripSeparator();
+            menu.Items.Add(sep);
+
+            // Ordering
+            string order = Ini.GetString(Program.secGeneral, Program.paramsOrder, "");
+            item = new ToolStripMenuItem();
+            item.Text = "Order...";
+            menu.Items.Add(item);
+            subItem = new ToolStripMenuItem();
+            subItem.Text = "Ascending";
+            subItem.Click += new EventHandler(Order_Click);
+            if (string.Compare(subItem.Text, order, true) == 0)
+                setItemActive(subItem);
+            item.DropDownItems.Add(subItem);
+            subItem = new ToolStripMenuItem();
+            subItem.Text = "Descending";
+            subItem.Click += new EventHandler(Order_Click);
+            if (string.Compare(subItem.Text, order, true) == 0)
+                setItemActive(subItem);
+            item.DropDownItems.Add(subItem);
+            subItem = new ToolStripMenuItem();
+            subItem.Text = "Chronological";
+            subItem.Click += new EventHandler(Order_Click);
+            if (string.Compare(subItem.Text, order, true) == 0)
+                setItemActive(subItem);
             item.DropDownItems.Add(subItem);
 
             // Separator.
@@ -387,6 +446,32 @@ namespace SmallBrother
 
         #endregion
 
+        #region Ordering
+
+        /// <summary>
+        /// Handles the Click event on open files submenu item.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        private void Order_Click(object sender, EventArgs e)
+        {
+            string file = ((ToolStripMenuItem)sender).Text;
+            if (file.ToUpper().Equals("ASCENDING"))
+            {
+                Ini.Write(Program.secGeneral, Program.paramsOrder, "ascending");
+            }
+            if (file.ToUpper().Equals("DESCENDING"))
+            {
+                Ini.Write(Program.secGeneral, Program.paramsOrder, "descending");
+            }
+            if (file.ToUpper().Equals("CHRONOLOGICAL"))
+            {
+                Ini.Write(Program.secGeneral, Program.paramsOrder, "chronological");
+            }
+        }
+
+        #endregion Ordering
+
         #region Explorer events
 
         /// <summary>
@@ -443,6 +528,36 @@ namespace SmallBrother
         #endregion Events Handlers
 
         #region Private Helpers
+
+        // Get the task names from the ini file and order them as set in the file itself.
+        // If order not set, use chronological (= unsorted)
+        private string[] getTaskNames()
+        {
+            string[] tasks = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
+            string order = Ini.GetString(Program.secGeneral, Program.paramsOrder, "chronological");
+
+            string[] taskNames = tasks;
+            if (order.ToLower() == "ascending")
+            {
+                Array.Sort<string>(taskNames, new Comparison<string>((i1, i2) => i1.CompareTo(i2)));
+            }
+            if (order.ToLower() == "descending")
+            {
+                Array.Sort<string>(taskNames, new Comparison<string>((i1, i2) => i2.CompareTo(i1)));
+            }
+
+            return taskNames;
+
+        }
+
+        // Set the style for active item
+        private void setItemActive(ToolStripMenuItem item)
+        {
+            Color activeItemColor = ColorHelper.color(Ini.GetString(Program.secColors, "ActiveTask", "150,150,150"));
+
+            item.Font = new Font(item.Font, FontStyle.Bold);
+            item.BackColor = activeItemColor;
+        }
 
         #endregion Private Helpers
 
