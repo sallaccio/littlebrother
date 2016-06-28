@@ -145,6 +145,44 @@ namespace SmallBrother
             newItemBox.MouseLeave += new EventHandler(NewInterval_MouseLeave);
             item.DropDownItems.Add(newItemBox);
 
+
+            // Reminder.
+            item = new ToolStripMenuItem();
+            item.Text = "Simple reminder...";
+            //item.Image = Resources.Pause;
+            menu.Items.Add(item);
+            // Textbox for adding reminder text
+            newItemBox = new ToolStripTextBox(TextBoxProperties.ReminderTextWatermarkText);
+            newItemBox.Text = TextBoxProperties.ReminderTextWatermarkText;
+            newItemBox.Font = new Font(newItemBox.Font, FontStyle.Italic);
+            newItemBox.KeyUp += new KeyEventHandler(ReminderText_KeyUp);
+            newItemBox.MouseEnter += new EventHandler(ReminderText_MouseEnter);
+            newItemBox.MouseLeave += new EventHandler(ReminderText_MouseLeave);
+            item.DropDownItems.Add(newItemBox);
+
+            // Separator.
+            sep = new ToolStripSeparator();
+            item.DropDownItems.Add(sep);
+
+            foreach (string interval in intervals)
+            {
+                if (interval != "")
+                {
+                    subItem = new ToolStripMenuItem();
+                    subItem.Text = interval;
+                    subItem.Click += new EventHandler(ReminderIn_Click);
+                    item.DropDownItems.Add(subItem);
+                }
+            }
+            // Textbox for adding new time for reminder
+            newItemBox = new ToolStripTextBox("How long?");
+            newItemBox.Text = TextBoxProperties.NewIntervalWatermarkText;
+            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
+            newItemBox.KeyUp += new KeyEventHandler(ReminderIn_KeyUp);
+            newItemBox.MouseEnter += new EventHandler(NewInterval_MouseEnter);
+            newItemBox.MouseLeave += new EventHandler(NewInterval_MouseLeave);
+            item.DropDownItems.Add(newItemBox);
+
             // Separator.
             sep = new ToolStripSeparator();
             menu.Items.Add(sep);
@@ -178,51 +216,10 @@ namespace SmallBrother
             // Timesheet.
             item = new ToolStripMenuItem();
             item.Text = "TimeSheet";
+            item.Font = new Font(item.Font, FontStyle.Bold);
             item.Click += new EventHandler(TimeSheet_Click);
             //item.Image = Resources.Timesheet;
             menu.Items.Add(item);
-
-            // Separator.
-            sep = new ToolStripSeparator();
-            menu.Items.Add(sep);
-
-            // Reminder.
-            item = new ToolStripMenuItem();
-            item.Text = "Reminder";
-            //item.Image = Resources.Pause;
-            menu.Items.Add(item);
-            // Textbox for adding reminder text
-            newItemBox = new ToolStripTextBox(TextBoxProperties.ReminderTextWatermarkText);
-            newItemBox.Text = TextBoxProperties.ReminderTextWatermarkText;
-            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
-            newItemBox.KeyUp += new KeyEventHandler(ReminderText_KeyUp);
-            newItemBox.MouseEnter += new EventHandler(ReminderText_MouseEnter);
-            newItemBox.MouseLeave += new EventHandler(ReminderText_MouseLeave);
-            item.DropDownItems.Add(newItemBox);
-
-            // Separator.
-            sep = new ToolStripSeparator();
-            item.DropDownItems.Add(sep);
-
-            foreach (string interval in intervals)
-            {
-                if (interval != "")
-                {
-                    subItem = new ToolStripMenuItem();
-                    subItem.Text = interval;
-                    subItem.Click += new EventHandler(ReminderIn_Click);
-                    //subItem.Click += new EventHandler(PauseAndRemindIn_Click);
-                    item.DropDownItems.Add(subItem);
-                }
-            }
-            // Textbox for adding new time
-            newItemBox = new ToolStripTextBox("How long?");
-            newItemBox.Text = TextBoxProperties.NewIntervalWatermarkText;
-            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
-            newItemBox.KeyUp += new KeyEventHandler(ReminderIn_KeyUp);
-            newItemBox.MouseEnter += new EventHandler(NewInterval_MouseEnter);
-            newItemBox.MouseLeave += new EventHandler(NewInterval_MouseLeave);
-            item.DropDownItems.Add(newItemBox);
 
             // Separator.
             sep = new ToolStripSeparator();
@@ -240,10 +237,6 @@ namespace SmallBrother
             subItem.Text = "Time file";
             subItem.Click += new EventHandler(Open_Click);
             item.DropDownItems.Add(subItem);
-
-            // Separator.
-            sep = new ToolStripSeparator();
-            menu.Items.Add(sep);
 
             // Ordering
             string order = Ini.GetString(Program.secGeneral, Program.paramsOrder, "");
@@ -272,13 +265,6 @@ namespace SmallBrother
             // Separator.
             sep = new ToolStripSeparator();
             menu.Items.Add(sep);
-
-            // Windows Explorer.
-            item = new ToolStripMenuItem();
-            item.Text = "Explorer";
-            item.Click += new EventHandler(Explorer_Click);
-            //item.Image = Resources.Explorer;
-            menu.Items.Add(item);
 
             // About.
             item = new ToolStripMenuItem();
@@ -394,33 +380,6 @@ namespace SmallBrother
         }
 
         /// <summary>
-        /// Handles the Click event of the Reminder control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void ReminderIn_Click(object sender, EventArgs e)
-        {
-            string newInterval = ((ToolStripMenuItem)sender).Text;
-            Program.LaunchReminder(newInterval, reminderText);
-            ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
-        }
-
-        /// <summary>
-        /// Handles the Enter key event for the textbox of a new time interval for simple reminder.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void ReminderIn_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string newInterval = ((ToolStripTextBox)sender).Text;
-                Program.LaunchReminder(newInterval, reminderText);
-                ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
-            }
-        }
-
-        /// <summary>
         /// Handles the Enter key event for the textbox of a new time interval for manual reminder
         /// </summary>
         /// <param name="sender"></param>
@@ -497,7 +456,6 @@ namespace SmallBrother
             if (((ToolStripTextBox)sender).Text == "")
             {
                 ((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).Focus();
-                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.WatermarkTextColor;
                 ((ToolStripTextBox)sender).Text = TextBoxProperties.ReminderTextWatermarkText;
             }
             else
@@ -507,8 +465,34 @@ namespace SmallBrother
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the Reminder control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void ReminderIn_Click(object sender, EventArgs e)
+        {
+            string newInterval = ((ToolStripMenuItem)sender).Text;
+            Program.LaunchReminder(newInterval, reminderText);
+            ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
+        }
 
-        #endregion Pause And Remind In events
+        /// <summary>
+        /// Handles the Enter key event for the textbox of a new time interval for simple reminder.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void ReminderIn_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string newInterval = ((ToolStripTextBox)sender).Text;
+                Program.LaunchReminder(newInterval, reminderText);
+                ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
+            }
+        }
+
+        #endregion Pause And Reminder events
 
         #region RemoveTask events
 
@@ -532,8 +516,7 @@ namespace SmallBrother
             //string current;
             //if (TimerFile.getLastItem(out current))
             //    TimerFile.addStartItem(current);
-            OutputWindow output = new OutputWindow();
-            output.Show();
+            Program.ShowTimeSheet();
         }
 
         #endregion Timesheet events
@@ -586,23 +569,6 @@ namespace SmallBrother
         }
 
         #endregion Ordering
-
-        #region Explorer events
-
-        /// <summary>
-        /// Handles the Click event of the Explorer control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void Explorer_Click(object sender, EventArgs e)
-		{
-            //Process.Start("explorer", null);   
-            string test = "You asked to select a new project. You can do it directly from the list!";
-            string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
-            new MessageForm(test, taskNames, TimerFile.getLastItem()).Show();
-        }
-
-        #endregion Explorer events
 
         #region About events
 
