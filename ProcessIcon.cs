@@ -70,9 +70,8 @@ namespace SmallBrother
 			// Handle mouse button clicks.
 			if (e.Button == MouseButtons.Left)
 			{
-				// Start Windows Explorer.
-				Process.Start("explorer", null);
-			}
+                Program.ShowTimeSheet();
+            }
 		}
 
         /// <summary>

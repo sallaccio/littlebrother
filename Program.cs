@@ -108,5 +108,11 @@ namespace SmallBrother
             };
         }
 
+        public static void ShowTimeSheet()
+        {
+            OutputWindow output = new OutputWindow();
+            output.Show();
+        }
+
     }
 }
