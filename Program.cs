@@ -4,18 +4,20 @@ using System.Windows.Forms;
 
 using Helpers;
 using IniController;
+using System.Collections.Generic;
 
 namespace SmallBrother
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public static class Program
-	{
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class Program
+    {
 
         #region Private fields
 
         private static Timer theTimer = new Timer();
+        //private static List<Timer> reminderTimers = new List<Timer>();
 
         #endregion Private fields
 
@@ -41,18 +43,18 @@ namespace SmallBrother
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-		static void Main()
-		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
             Debug.WriteLineIf(iniFile == null || iniFile == "", "Ini file was not well defined.");
             Ini.SetFile(iniFile);
 
             // Show the system tray icon.					
             using (ProcessIcon pi = new ProcessIcon())
-			{
-				pi.Display();
+            {
+                pi.Display();
                 string remindIn = Ini.GetString("StartupReminder", "Interval", "5 mins");
                 LaunchProjectFormIn(HTime.inMilliseconds(remindIn));
 
@@ -60,8 +62,8 @@ namespace SmallBrother
 
                 // Make sure the application runs!
                 Debug.WriteLine("Start application.");
-				Application.Run();
-			}
+                Application.Run();
+            }
         }
 
 
@@ -90,6 +92,20 @@ namespace SmallBrother
                 string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
                 new MessageForm(test, taskNames, TimerFile.getLastItem()).Show();
             }
+        }
+
+        public static void LaunchReminder(string interval, string text)
+        {
+            int inter = HTime.inMilliseconds(interval);
+            Timer reminderTimer = new Timer();
+            reminderTimer.Interval = inter;
+            reminderTimer.Start();
+
+            reminderTimer.Tick += (sender, eventArgs) =>
+            {
+                reminderTimer.Stop();
+                MessageBox.Show(text, "Reminder (" + interval + ")");
+            };
         }
 
     }

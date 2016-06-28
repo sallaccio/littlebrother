@@ -20,14 +20,15 @@ namespace SmallBrother
 		bool isAboutLoaded = false;
 
         private string timerFile = Program.confFolder + "\\" + Ini.GetString(Program.secGeneral, "TimerFile", "");
+        private string reminderText = TextBoxProperties.ReminderTextWatermarkText;
 
         #region Public Methods
 
         /// <summary>
-		/// Creates this instance.
-		/// </summary>
-		/// <returns>ContextMenuStrip</returns>
-		public ContextMenuStrip Create()
+        /// Creates this instance.
+        /// </summary>
+        /// <returns>ContextMenuStrip</returns>
+        public ContextMenuStrip Create()
 		{
 			// Add the default menu options.
             ContextMenuStrip menu = new ContextMenuStrip();
@@ -180,6 +181,48 @@ namespace SmallBrother
             item.Click += new EventHandler(TimeSheet_Click);
             //item.Image = Resources.Timesheet;
             menu.Items.Add(item);
+
+            // Separator.
+            sep = new ToolStripSeparator();
+            menu.Items.Add(sep);
+
+            // Reminder.
+            item = new ToolStripMenuItem();
+            item.Text = "Reminder";
+            //item.Image = Resources.Pause;
+            menu.Items.Add(item);
+            // Textbox for adding reminder text
+            newItemBox = new ToolStripTextBox(TextBoxProperties.ReminderTextWatermarkText);
+            newItemBox.Text = TextBoxProperties.ReminderTextWatermarkText;
+            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
+            newItemBox.KeyUp += new KeyEventHandler(ReminderText_KeyUp);
+            newItemBox.MouseEnter += new EventHandler(ReminderText_MouseEnter);
+            newItemBox.MouseLeave += new EventHandler(ReminderText_MouseLeave);
+            item.DropDownItems.Add(newItemBox);
+
+            // Separator.
+            sep = new ToolStripSeparator();
+            item.DropDownItems.Add(sep);
+
+            foreach (string interval in intervals)
+            {
+                if (interval != "")
+                {
+                    subItem = new ToolStripMenuItem();
+                    subItem.Text = interval;
+                    subItem.Click += new EventHandler(ReminderIn_Click);
+                    //subItem.Click += new EventHandler(PauseAndRemindIn_Click);
+                    item.DropDownItems.Add(subItem);
+                }
+            }
+            // Textbox for adding new time
+            newItemBox = new ToolStripTextBox("How long?");
+            newItemBox.Text = TextBoxProperties.NewIntervalWatermarkText;
+            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
+            newItemBox.KeyUp += new KeyEventHandler(ReminderIn_KeyUp);
+            newItemBox.MouseEnter += new EventHandler(NewInterval_MouseEnter);
+            newItemBox.MouseLeave += new EventHandler(NewInterval_MouseLeave);
+            item.DropDownItems.Add(newItemBox);
 
             // Separator.
             sep = new ToolStripSeparator();
@@ -351,6 +394,33 @@ namespace SmallBrother
         }
 
         /// <summary>
+        /// Handles the Click event of the Reminder control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void ReminderIn_Click(object sender, EventArgs e)
+        {
+            string newInterval = ((ToolStripMenuItem)sender).Text;
+            Program.LaunchReminder(newInterval, reminderText);
+            ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
+        }
+
+        /// <summary>
+        /// Handles the Enter key event for the textbox of a new time interval for simple reminder.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        void ReminderIn_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string newInterval = ((ToolStripTextBox)sender).Text;
+                Program.LaunchReminder(newInterval, reminderText);
+                ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
+            }
+        }
+
+        /// <summary>
         /// Handles the Enter key event for the textbox of a new time interval for manual reminder
         /// </summary>
         /// <param name="sender"></param>
@@ -392,6 +462,51 @@ namespace SmallBrother
             }
 
         }
+
+        /// <summary>
+        /// Handles the Enter key event for the textbox of the reminder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ReminderText_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).Focus();
+                reminderText = ((ToolStripTextBox)sender).Text;
+            }
+        }
+
+        /// <summary>
+        /// On mouse enter, if default text, remove it and change text color.
+        /// </summary>
+        void ReminderText_MouseEnter(object sender, EventArgs e)
+        {
+            if (((ToolStripTextBox)sender).Text == TextBoxProperties.ReminderTextWatermarkText)
+            {
+                ((ToolStripTextBox)sender).Text = "";
+                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.NewItemTextColor;
+            }
+        }
+
+        /// <summary>
+        /// On mouse leave, if no text was entered, unfocus and reset default text and color.
+        /// </summary>
+        void ReminderText_MouseLeave(object sender, EventArgs e)
+        {
+            if (((ToolStripTextBox)sender).Text == "")
+            {
+                ((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).Focus();
+                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.WatermarkTextColor;
+                ((ToolStripTextBox)sender).Text = TextBoxProperties.ReminderTextWatermarkText;
+            }
+            else
+            {
+                ((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).Focus();
+                reminderText = ((ToolStripTextBox)sender).Text;
+            }
+        }
+
 
         #endregion Pause And Remind In events
 
@@ -597,6 +712,7 @@ namespace SmallBrother
     {
         public static string NewProjectWatermarkText = "Add project...";
         public static string NewIntervalWatermarkText = "How long?";
+        public static string ReminderTextWatermarkText = "You asked to be reminded of something.";
         public static string ClearText = "";
         public static Color WatermarkTextColor = ColorHelper.color("200,200,200");
         public static Color NewItemTextColor = ColorHelper.color("0,0,0");
