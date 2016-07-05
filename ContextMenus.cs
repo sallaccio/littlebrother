@@ -474,7 +474,7 @@ namespace SmallBrother
         {
             string newInterval = ((ToolStripMenuItem)sender).Text;
             Program.LaunchReminder(newInterval, reminderText);
-            ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
+            ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripMenuItem)sender).Owner)).OwnerItem.Owner).Close();
         }
 
         /// <summary>
