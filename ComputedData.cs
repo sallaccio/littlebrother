@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 using IniController;
 
-namespace SmallBrother
+namespace LittleBrother
 {
 
     #region oldCode

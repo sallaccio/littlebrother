@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 
-using Helpers;
-using SmallBrother.Properties;
-
-namespace SmallBrother
+namespace LittleBrother
 {
 	/// <summary>
 	/// The icon in the taskbar, user main interaction with the program.
@@ -33,7 +29,7 @@ namespace SmallBrother
 		{
             // Put the icon in the system tray	
 #if DEBUG
-            ni.Icon = Resources.Calendar;
+            ni.Icon = Resources.Hourglass_Round;
 #else
             ni.Icon = Resources.Hourglass_Flat;
 #endif

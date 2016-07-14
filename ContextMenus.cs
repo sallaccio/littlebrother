@@ -1,5 +1,4 @@
-﻿using SmallBrother.Properties;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,7 +6,7 @@ using System.Windows.Forms;
 using IniController;
 using Helpers;
 
-namespace SmallBrother
+namespace LittleBrother
 {
     /// <summary>
 	/// 
@@ -270,7 +269,8 @@ namespace SmallBrother
             item = new ToolStripMenuItem();
             item.Text = "About";
             item.Click += new EventHandler(About_Click);
-            item.Image = Resources.About;
+            item.Image = SystemIcons.Information.ToBitmap();
+            //item.Image = Resources.About;
             menu.Items.Add(item);
 
             // Separator.
@@ -281,7 +281,8 @@ namespace SmallBrother
             item = new ToolStripMenuItem();
             item.Text = "Exit";
             item.Click += new System.EventHandler(Exit_Click);
-            item.Image = Resources.Exit;
+            item.Image = SystemIcons.Error.ToBitmap();
+            //item.Image = Resources.Exit;
             menu.Items.Add(item);
         }
 

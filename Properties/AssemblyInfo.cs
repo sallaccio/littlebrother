@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Small Brother")]
+[assembly: AssemblyTitle("Little Brother")]
 [assembly: AssemblyDescription("A little tool that keeps track of the different projects you work on. Totally illegal for anyone to even ask someone else to use it.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("But don't change it!")]
-[assembly: AssemblyProduct("SystemTrayApp")]
+[assembly: AssemblyProduct("LittleBrother")]
 [assembly: AssemblyCopyright("Copyleft. Or straight. Or whatever.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

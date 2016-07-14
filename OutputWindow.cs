@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SmallBrother
+namespace LittleBrother
 {
     public partial class OutputWindow : Form
     {

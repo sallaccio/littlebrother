@@ -6,7 +6,7 @@ using Helpers;
 using IniController;
 using System.Collections.Generic;
 
-namespace SmallBrother
+namespace LittleBrother
 {
     /// <summary>
     /// 
@@ -88,7 +88,7 @@ namespace SmallBrother
             string lastProj;
             if (!TimerFile.getLastItem(out lastProj))
             {
-                string test = "Small brother is watching you: Don't forget to choose a project.";
+                string test = "Little Brother is watching you: Don't forget to choose a project.";
                 string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
                 new MessageForm(test, taskNames, TimerFile.getLastItem()).Show();
             }

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using IniController;
 using Helpers;
 
-namespace SmallBrother
+namespace LittleBrother
 {
 
     public enum TimePrecision { HOUR, HALFHOUR, MINUTE, SECOND };

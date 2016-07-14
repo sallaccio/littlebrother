@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace SmallBrother
+namespace LittleBrother
 {
 	partial class AboutBox : Form
 	{

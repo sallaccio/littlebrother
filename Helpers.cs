@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 using IniController;
-using SmallBrother;
+using LittleBrother;
 
 namespace Helpers
 {

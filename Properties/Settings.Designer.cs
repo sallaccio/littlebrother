@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SmallBrother.Properties {
+namespace LittleBrother {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

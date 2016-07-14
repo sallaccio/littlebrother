@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SmallBrother
+namespace LittleBrother
 {
     partial class OutputWindow
     {

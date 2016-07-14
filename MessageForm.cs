@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using IniController;
 using Helpers;
 
-namespace SmallBrother
+namespace LittleBrother
 {
     public partial class MessageForm : Form
     {
