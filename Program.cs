@@ -23,8 +23,8 @@ namespace LittleBrother
 
         #region Public fields
 
-        public const string confFolder = "ConfFiles";
-        public const string iniFile = confFolder + "\\SmallBro.ini";
+        public static string confFolder = Settings.Default.FileDir;
+        public static string iniFile = confFolder + "\\SmallBro.ini";
 
         // Sections
         public const string secGeneral = "General";

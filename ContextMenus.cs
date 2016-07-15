@@ -18,7 +18,7 @@ namespace LittleBrother
 		/// </summary>
 		bool isAboutLoaded = false;
 
-        private string timerFile = Program.confFolder + "\\" + Ini.GetString(Program.secGeneral, "TimerFile", "");
+        private string timerFile = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
         private string reminderText = TextBoxProperties.ReminderTextWatermarkText;
 
         #region Public Methods
@@ -538,8 +538,9 @@ namespace LittleBrother
             }
             else if (file.ToUpper().Equals("TIME FILE"))
             {
-                file = Program.confFolder + "\\" + Ini.GetString(Program.secGeneral, "TimerFile", "");
-                Process.Start(file);
+                //file = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
+                //Process.Start(file);
+                Process.Start(timerFile);
             }
         }
 
@@ -635,7 +636,7 @@ namespace LittleBrother
         // Set the style for active item
         private void setItemActive(ToolStripMenuItem item)
         {
-            Color activeItemColor = ColorHelper.color(Ini.GetString(Program.secColors, "ActiveTask", "150,150,150"));
+            Color activeItemColor = ColorHelper.color(Settings.Default.ActiveTaskColor);
 
             item.Font = new Font(item.Font, FontStyle.Bold);
             item.BackColor = activeItemColor;

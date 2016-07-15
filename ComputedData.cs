@@ -8,88 +8,6 @@ using IniController;
 
 namespace LittleBrother
 {
-
-    #region oldCode
-    //class DayProjectTimes
-    //{
-    //    public DayOfWeek day;
-    //    public Dictionary<string, int> projectTimes;
-
-    //    public DayProjectTimes(string dayOfWeek)
-    //    {
-    //        switch (dayOfWeek.ToLower())
-    //        {
-    //            case "monday":
-    //                day = DayOfWeek.Monday;
-    //                break;
-    //            case "tuesday":
-    //                day = DayOfWeek.Tuesday;
-    //                break;
-    //            case "wednesday":
-    //                day = DayOfWeek.Wednesday;
-    //                break;
-    //            case "thursday":
-    //                day = DayOfWeek.Thursday;
-    //                break;
-    //            case "friday":
-    //                day = DayOfWeek.Friday;
-    //                break;
-    //            case "saturday":
-    //                day = DayOfWeek.Saturday;
-    //                break;
-    //            default:
-    //                day = DayOfWeek.Sunday;
-    //                break;
-    //        }
-
-    //        projectTimes = new Dictionary<string, int>();
-    //    }
-    //}
-
-    //class WeekTimes
-    //{
-    //    public DateTime startDate;
-    //    public DateTime endDate;
-    //    public DayProjectTimes monday, tuesday, wednesday, thursday, friday, saturday, sunday;
-    //    public Dictionary<string, int> tasksDict;
-
-    //    public WeekTimes()
-    //    {
-    //        tasksDict = new Dictionary<string, int>();
-    //        monday = new DayProjectTimes("monday");
-    //        tuesday = new DayProjectTimes("tuesday");
-    //        wednesday = new DayProjectTimes("wednesday");
-    //        thursday = new DayProjectTimes("thursday");
-    //        friday = new DayProjectTimes("friday");
-    //        saturday = new DayProjectTimes("saturday");
-    //        sunday = new DayProjectTimes("sunday");
-    //    }
-
-    //    public WeekTimes(DateTime dateTime) : this()
-    //    {
-    //        //WeekTimes week = new WeekTimes();
-    //        startDate = new DateTime(dateTime.Year,dateTime.Month,dateTime.Day-(int)dateTime.DayOfWeek+1); 
-    //        endDate = startDate.AddDays(7);
-    //        endDate.AddHours(23);
-    //        endDate.AddMinutes(59);
-    //        endDate.AddSeconds(59);
-    //    }
-
-    //    public WeekTimes(string date) : this()
-    //    {
-    //        DateTime dateTime;
-    //        if (DateTime.TryParse(date, out dateTime))
-    //        {
-    //            startDate = new DateTime(dateTime.Year,dateTime.Month,dateTime.Day-(int)dateTime.DayOfWeek+1); 
-    //            endDate = startDate.AddDays(7);
-    //            endDate.AddHours(23);
-    //            endDate.AddMinutes(59);
-    //            endDate.AddSeconds(59);
-    //        }    
-    //    }
-    //}
-    #endregion oldCode
-
     class WeekData
     {
         public DateTime startDate;
@@ -138,7 +56,7 @@ namespace LittleBrother
 
     class ComputedData
     {
-        private static string timerFile = Program.confFolder + "\\" + Ini.GetString(Program.secGeneral, "TimerFile", "");
+        private static string timerFile = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
         private static WeekData week;
 
         #region Public Methods
@@ -259,7 +177,6 @@ namespace LittleBrother
                 }
             }
         }
-
 
         #endregion Private Helpers
     }

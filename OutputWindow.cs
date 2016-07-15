@@ -21,9 +21,8 @@ namespace LittleBrother
             }
         }
 
-
-
         #region Event handlers
+        
         private void dataGridPsaView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -63,6 +62,7 @@ namespace LittleBrother
         #endregion Event handlers
 
         #region Private methods
+
         private void FillTables(WeekData week)
         {
             dataGridPsaView.Rows.Clear();

@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LittleBrother.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LittleBrother" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="InteractionPanelColor" Type="System.Drawing.Color" Scope="User">
@@ -10,6 +10,21 @@
     </Setting>
     <Setting Name="TestSomeValueColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">DarkRed</Value>
+    </Setting>
+    <Setting Name="FileDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ConfFiles</Value>
+    </Setting>
+    <Setting Name="ActiveTaskColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">50,0,200,200</Value>
+    </Setting>
+    <Setting Name="TimerFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TimerFile.log</Value>
+    </Setting>
+    <Setting Name="LocalizationMessagesFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Messages.ini</Value>
+    </Setting>
+    <Setting Name="LocalizationLabelsFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Labels.ini</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -58,5 +58,65 @@ namespace LittleBrother {
                 this["TestSomeValueColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ConfFiles")]
+        public string FileDir {
+            get {
+                return ((string)(this["FileDir"]));
+            }
+            set {
+                this["FileDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50,0,200,200")]
+        public string ActiveTaskColor {
+            get {
+                return ((string)(this["ActiveTaskColor"]));
+            }
+            set {
+                this["ActiveTaskColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TimerFile.log")]
+        public string TimerFile {
+            get {
+                return ((string)(this["TimerFile"]));
+            }
+            set {
+                this["TimerFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Messages.ini")]
+        public string LocalizationMessagesFile {
+            get {
+                return ((string)(this["LocalizationMessagesFile"]));
+            }
+            set {
+                this["LocalizationMessagesFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Labels.ini")]
+        public string LocalizationLabelsFile {
+            get {
+                return ((string)(this["LocalizationLabelsFile"]));
+            }
+            set {
+                this["LocalizationLabelsFile"] = value;
+            }
+        }
     }
 }
