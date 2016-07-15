@@ -61,7 +61,7 @@ namespace LittleBrother {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ConfFiles")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".")]
         public string FileDir {
             get {
                 return ((string)(this["FileDir"]));

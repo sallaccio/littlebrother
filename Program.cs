@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 using Helpers;
 using IniController;
-using System.Collections.Generic;
 
 namespace LittleBrother
 {
@@ -23,12 +23,10 @@ namespace LittleBrother
 
         #region Public fields
 
-        public static string confFolder = Settings.Default.FileDir;
-        public static string iniFile = confFolder + "\\SmallBro.ini";
+        public static string iniFile = Settings.Default.FileDir + "\\SmallBro.ini";
 
         // Sections
         public const string secGeneral = "General";
-        public const string secColors = "Colors";
         public const string secManualReminder = "ManualReminder";
 
         // Keys
@@ -54,6 +52,8 @@ namespace LittleBrother
             // Show the system tray icon.					
             using (ProcessIcon pi = new ProcessIcon())
             {
+                checkFiles();
+
                 pi.Display();
                 string remindIn = Ini.GetString("StartupReminder", "Interval", "5 mins");
                 LaunchProjectFormIn(HTime.inMilliseconds(remindIn));
@@ -66,6 +66,12 @@ namespace LittleBrother
             }
         }
 
+        public static void checkFiles()
+        {
+            Directory.CreateDirectory(Settings.Default.FileDir);
+            if (!File.Exists(iniFile))
+                File.WriteAllText(iniFile, Resources.DefaultIni);
+        }
 
         public static void LaunchProjectFormIn(string interval)
         {

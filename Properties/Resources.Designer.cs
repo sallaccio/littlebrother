@@ -61,6 +61,34 @@ namespace LittleBrother {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [General]
+        ///TaskNames=
+        ///MaxItems = 5
+        ///Order = chronological
+        ///
+        ///[Values]
+        ///DefaultReminderUnit = minute
+        ///
+        ///[AutoBackupData]
+        ///SaveInterval = 10 sec
+        ///LastTimestamp = 
+        ///
+        ///[StartupReminder]
+        ///Interval = 5 sec
+        ///
+        ///[ManualReminder]
+        ///Intervals = 5 mins, 30 mins, 1 hour
+        ///
+        ///[Localization]
+        ///Language = eng.
+        /// </summary>
+        public static string DefaultIni {
+            get {
+                return ResourceManager.GetString("DefaultIni", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon Hourglass_Flat {
