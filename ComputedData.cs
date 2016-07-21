@@ -56,17 +56,17 @@ namespace LittleBrother
 
     class ComputedData
     {
-        private static string timerFile = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
-        private static WeekData week;
+        private string timerFile = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
+        private WeekData week;
 
         #region Public Methods
 
-        public static WeekData Week()
+        public WeekData Week()
         {
             return week;
         }
 
-        public static bool computeData(DateTime date)
+        public bool computeData(DateTime date)
         {
             Debug.WriteLineIf(date.CompareTo(DateTime.Today) > 0, "Trying to compute data for the future.");
 
@@ -139,7 +139,7 @@ namespace LittleBrother
         #region Private Helpers
 
         // Add the duration of a task to the week data
-        private static void addDurationToWeek(string taskName, TimeSpan duration)
+        private void addDurationToWeek(string taskName, TimeSpan duration)
         {
             if (week.tasksDict == null || !week.tasksDict.ContainsKey(taskName))
                 week.tasksDict.Add(taskName, 0);
@@ -147,7 +147,7 @@ namespace LittleBrother
         }
 
         // Add the duration of a given task to the weekday (and to week in general)
-        private static void addDurationToDay(string taskName, TimeSpan duration, DayOfWeek weekday)
+        private void addDurationToDay(string taskName, TimeSpan duration, DayOfWeek weekday)
         {
             if (week.Days[weekday] == null || !week.Days[weekday].ContainsKey(taskName))
                 week.Days[weekday].Add(taskName, 0);
@@ -158,7 +158,7 @@ namespace LittleBrother
         }
 
         // Check of some strange things happen, like a non-stop job over new years! Unbearable.
-        private static void checkDayDiff(DateTime startD, DateTime endD, string taskName)
+        private void checkDayDiff(DateTime startD, DateTime endD, string taskName)
         {
             int dayDiff = endD.DayOfYear - startD.DayOfYear;
             if (dayDiff < 0)

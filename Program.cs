@@ -17,7 +17,6 @@ namespace LittleBrother
         #region Private fields
 
         private static Timer theTimer = new Timer();
-        //private static List<Timer> reminderTimers = new List<Timer>();
 
         #endregion Private fields
 

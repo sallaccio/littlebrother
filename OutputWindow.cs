@@ -12,12 +12,14 @@ namespace LittleBrother
 {
     public partial class OutputWindow : Form
     {
+        ComputedData data = new ComputedData();
+
         public OutputWindow()
         {
             InitializeComponent();
-            if (ComputedData.computeData(DateTime.Today) == true)
+            if (data.computeData(DateTime.Today) == true)
             {
-                FillTables(ComputedData.Week());
+                FillTables(data.Week());
             }
         }
 
@@ -44,18 +46,18 @@ namespace LittleBrother
             {
                 mon = currentWeekStart;
             }
-            if (ComputedData.computeData(mon) == true || DateTime.Compare(mon,TimerFile.getFirstDate()) > 0)
+            if (data.computeData(mon) == true || DateTime.Compare(mon,TimerFile.getFirstDate()) > 0)
             {
-                FillTables(ComputedData.Week());
+                FillTables(data.Week());
             }
         }
 
         private void buttonNextWeek_Click(object sender, EventArgs e)
         {
             DateTime mon = currentWeekStart.AddDays(7);
-            if (ComputedData.computeData(mon) == true || DateTime.Compare(mon, TimerFile.getLastDate()) < 0)
+            if (data.computeData(mon) == true || DateTime.Compare(mon, TimerFile.getLastDate()) < 0)
             {
-                FillTables(ComputedData.Week());
+                FillTables(data.Week());
             }
         }
 
