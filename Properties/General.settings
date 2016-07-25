@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LittleBrother" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LittleBrother.Properties" GeneratedClassName="General">
   <Profiles />
   <Settings>
     <Setting Name="InteractionPanelColor" Type="System.Drawing.Color" Scope="User">
@@ -8,17 +8,11 @@
     <Setting Name="RemindLaterButton" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">LightGreen</Value>
     </Setting>
-    <Setting Name="TestSomeValueColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">DarkRed</Value>
-    </Setting>
     <Setting Name="FileDir" Type="System.String" Scope="User">
       <Value Profile="(Default)">.</Value>
     </Setting>
-    <Setting Name="ActiveTaskColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">50,0,200,200</Value>
-    </Setting>
     <Setting Name="TimerFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TimerFile.log</Value>
+      <Value Profile="(Default)">TimerFile.Instance.log</Value>
     </Setting>
     <Setting Name="LocalizationMessagesFile" Type="System.String" Scope="User">
       <Value Profile="(Default)">Messages.ini</Value>

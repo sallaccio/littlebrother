@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LittleBrother {
+namespace LittleBrother.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class General : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static General defaultInstance = ((General)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new General())));
         
-        public static Settings Default {
+        public static General Default {
             get {
                 return defaultInstance;
             }
@@ -49,18 +49,6 @@ namespace LittleBrother {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("DarkRed")]
-        public global::System.Drawing.Color TestSomeValueColor {
-            get {
-                return ((global::System.Drawing.Color)(this["TestSomeValueColor"]));
-            }
-            set {
-                this["TestSomeValueColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(".")]
         public string FileDir {
             get {
@@ -73,19 +61,7 @@ namespace LittleBrother {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50,0,200,200")]
-        public string ActiveTaskColor {
-            get {
-                return ((string)(this["ActiveTaskColor"]));
-            }
-            set {
-                this["ActiveTaskColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TimerFile.log")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TimerFile.Instance.log")]
         public string TimerFile {
             get {
                 return ((string)(this["TimerFile"]));

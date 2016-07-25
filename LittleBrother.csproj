@@ -130,14 +130,13 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Menu.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Properties\Settings.settings">
+    <None Include="Properties\General.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>LittleBrother</CustomToolNamespace>
+      <LastGenOutput>General.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="Properties\General.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
+      <DependentUpon>General.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>

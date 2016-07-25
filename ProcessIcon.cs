@@ -50,7 +50,7 @@ namespace LittleBrother
 		/// </summary>
 		public void Dispose()
 		{
-            TimerFile.addEndItem();
+            TimerFile.Instance.addEndItem();
 			// When the application closes, this will remove the icon from the system tray immediately.
 			ni.Dispose();
 		}
@@ -79,7 +79,7 @@ namespace LittleBrother
         void ni_MouseOver(object sender, MouseEventArgs e)
         {
             string current;
-            if (TimerFile.getLastItem(out current))
+            if (TimerFile.Instance.getLastItem(out current))
                 ni.Text = "[  " + current + "  ]";
             else
                 ni.Text = "Simply record what task you work on.";

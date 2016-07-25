@@ -3,6 +3,7 @@ using System.Windows.Forms;
 
 using IniController;
 using LittleBrother;
+using System.Drawing;
 
 namespace Helpers
 {
@@ -101,6 +102,39 @@ namespace Helpers
     }
 
     /// <summary>
+    /// Helper class to create a color from a string representation (RGB or aRGB)
+    /// </summary>
+    class HColor
+    {
+        /// <summary>
+        /// Returns RGB or aRGB color from a string representing a color name or an RGB/aRGB definition 
+        /// </summary>
+        /// <param name="argb">(alpha) Red Green Blue quantities or color name</param>
+        /// <returns></returns>
+        public static Color color(string colorDef)
+        {
+
+            if (colorDef.Contains(","))
+            {
+                string[] returnArray = colorDef.Split(',');
+                int[] argb = new int[returnArray.Length];
+                for (int i = 0; i < returnArray.Length; i++)
+                {
+                    argb[i] = int.Parse(returnArray[i].Trim());
+                }
+                if (argb.Length >= 4)
+                    return Color.FromArgb(argb[0], argb[1], argb[2], argb[3]);
+                else if (argb.Length >= 3)
+                    return Color.FromArgb(argb[0], argb[1], argb[2]);
+                else if (argb.Length >= 1)
+                    return Color.FromArgb(argb[0]);
+            }
+
+            return Color.FromName(colorDef);
+        }
+    }
+
+    /// <summary>
     /// Static class that take in charge the autosave feature.
     /// Every user-defined interval of time, it save the current timestamp in order to determine if the application is running properly.
     /// If, at startup or later, the last saved time is older than the interval, an action can be taken.
@@ -132,11 +166,11 @@ namespace Helpers
         {
             string currentProject = "";
             bool lastOk = CheckLastSavedTime();
-            if (TimerFile.getLastItem(out currentProject))
+            if (TimerFile.Instance.getLastItem(out currentProject))
             {
                 if (!lastOk)
                 {
-                    string message = "Last save is old: " + LastSavedTime().ToString() + "\nShould I stop the counter at that time for project " + TimerFile.getLastItem() + "?";
+                    string message = "Last save is old: " + LastSavedTime().ToString() + "\nShould I stop the counter at that time for project " + TimerFile.Instance.getLastItem() + "?";
                     DialogResult result = MessageBox.Show(message, "Warning", MessageBoxButtons.YesNo);
 
                     if (result == DialogResult.No)
@@ -155,7 +189,7 @@ namespace Helpers
                 Ini.Write("AutoBackupData", "LastTimestamp", DateTime.Now.ToString());
             else
             {
-                TimerFile.addEndItem(LastSavedTime());
+                TimerFile.Instance.addEndItem(LastSavedTime());
             }
 
 
@@ -246,7 +280,7 @@ namespace Helpers
         /// </summary>
         private void LastSaveToOld()
         {
-            string message = "Last save is old: " + AutoSave.LastSavedTime().ToString() + "\nShould I stop the counter at that time for project " + TimerFile.getLastItem() + "?";
+            string message = "Last save is old: " + AutoSave.LastSavedTime().ToString() + "\nShould I stop the counter at that time for project " + TimerFile.Instance.getLastItem() + "?";
             DialogResult result = MessageBox.Show(message, "Warning", MessageBoxButtons.YesNo);
 
             if (result == DialogResult.No)
@@ -256,7 +290,7 @@ namespace Helpers
             }
             else
             {
-                TimerFile.addEndItem(AutoSave.LastSavedTime());
+                TimerFile.Instance.addEndItem(AutoSave.LastSavedTime());
                 AutoSave.Stop();
             }
         }

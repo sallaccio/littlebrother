@@ -56,7 +56,7 @@ namespace LittleBrother
 
     class ComputedData
     {
-        private string timerFile = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
+        private string timerFile = Properties.General.Default.FileDir + "\\" + Properties.General.Default.TimerFile;
         private WeekData week;
 
         #region Public Methods

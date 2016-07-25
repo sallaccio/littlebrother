@@ -65,7 +65,7 @@ namespace LittleBrother
         private void ok_button_Click(object sender, EventArgs e)
         {
             string newProject = selectProject_combobox.Text;
-            TimerFile.addStartItem(newProject);
+            TimerFile.Instance.addStartItem(newProject);
             Ini.AddToArray(Program.secGeneral, "TaskNames", newProject, Unique.IGNORECASE);
             this.Close();
         }
@@ -85,7 +85,7 @@ namespace LittleBrother
             {
                 // TODO: check if project is in list and add to inifile
 
-                TimerFile.addStartItem((string)selectProject_combobox.SelectedItem);
+                TimerFile.Instance.addStartItem((string)selectProject_combobox.SelectedItem);
                 this.Close();
             }
         }
@@ -97,7 +97,7 @@ namespace LittleBrother
 
             //if (isMouseClick)
             //{
-            TimerFile.addStartItem((string)selectProject_combobox.SelectedItem);
+            TimerFile.Instance.addStartItem((string)selectProject_combobox.SelectedItem);
                 this.Close();
             //}
             //else

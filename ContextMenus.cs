@@ -18,8 +18,8 @@ namespace LittleBrother
 		/// </summary>
 		bool isAboutLoaded = false;
 
-        private string timerFile = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
-        private string reminderText = TextBoxProperties.ReminderTextWatermarkText;
+        private string timerFile = Properties.General.Default.FileDir + "\\" + Properties.General.Default.TimerFile;
+        private string reminderText = Properties.Menu.Default.ReminderTextWatermarkText;
 
         #region Public Methods
 
@@ -49,7 +49,7 @@ namespace LittleBrother
             string[] taskNames = getTaskNames();
             int numberOfTasks = taskNames.Length;
             string actualTask;
-            bool actual = TimerFile.getLastItem(out actualTask);
+            bool actual = TimerFile.Instance.getLastItem(out actualTask);
 
             string[] intervals = Ini.GetStringArray(Program.secManualReminder, Program.paramsIntervals, "10 mins");
             int maxItemsInList = Ini.GetInt(Program.secGeneral, Program.paramsMaxItems, numberOfTasks);
@@ -101,8 +101,8 @@ namespace LittleBrother
 
             // Textbox for adding new project
             newItemBox = new ToolStripTextBox("NewProject");
-            newItemBox.Text = TextBoxProperties.NewProjectWatermarkText;
-            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
+            newItemBox.Text = Properties.Menu.Default.NewProjectWatermarkText;
+            newItemBox.ForeColor = HColor.color(Properties.Menu.Default.WatermarkTextColor);
             newItemBox.KeyUp += new KeyEventHandler(NewItem_KeyUp);
             newItemBox.MouseEnter += new EventHandler(NewItem_MouseEnter);
             newItemBox.MouseLeave += new EventHandler(NewItem_MouseLeave);
@@ -137,8 +137,8 @@ namespace LittleBrother
             }
             // Textbox for adding new project
             newItemBox = new ToolStripTextBox("How long?");
-            newItemBox.Text = TextBoxProperties.NewIntervalWatermarkText;
-            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
+            newItemBox.Text = Properties.Menu.Default.NewIntervalWatermarkText;
+            newItemBox.ForeColor = HColor.color(Properties.Menu.Default.WatermarkTextColor);
             newItemBox.KeyUp += new KeyEventHandler(NewInterval_KeyUp);
             newItemBox.MouseEnter += new EventHandler(NewInterval_MouseEnter);
             newItemBox.MouseLeave += new EventHandler(NewInterval_MouseLeave);
@@ -151,8 +151,8 @@ namespace LittleBrother
             //item.Image = Resources.Pause;
             menu.Items.Add(item);
             // Textbox for adding reminder text
-            newItemBox = new ToolStripTextBox(TextBoxProperties.ReminderTextWatermarkText);
-            newItemBox.Text = TextBoxProperties.ReminderTextWatermarkText;
+            newItemBox = new ToolStripTextBox(Properties.Menu.Default.ReminderTextWatermarkText);
+            newItemBox.Text = Properties.Menu.Default.ReminderTextWatermarkText;
             newItemBox.Font = new Font(newItemBox.Font, FontStyle.Italic);
             newItemBox.KeyUp += new KeyEventHandler(ReminderText_KeyUp);
             newItemBox.MouseEnter += new EventHandler(ReminderText_MouseEnter);
@@ -175,8 +175,8 @@ namespace LittleBrother
             }
             // Textbox for adding new time for reminder
             newItemBox = new ToolStripTextBox("How long?");
-            newItemBox.Text = TextBoxProperties.NewIntervalWatermarkText;
-            newItemBox.ForeColor = TextBoxProperties.WatermarkTextColor;
+            newItemBox.Text = Properties.Menu.Default.NewIntervalWatermarkText;
+            newItemBox.ForeColor = HColor.color(Properties.Menu.Default.WatermarkTextColor);
             newItemBox.KeyUp += new KeyEventHandler(ReminderIn_KeyUp);
             newItemBox.MouseEnter += new EventHandler(NewInterval_MouseEnter);
             newItemBox.MouseLeave += new EventHandler(NewInterval_MouseLeave);
@@ -300,7 +300,7 @@ namespace LittleBrother
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Task_Click(object sender, EventArgs e)
         {
-            TimerFile.addStartItem(((ToolStripMenuItem)sender).Text); 
+            TimerFile.Instance.addStartItem(((ToolStripMenuItem)sender).Text); 
             ((ToolStripMenuItem)sender).Font = new Font(((ToolStripMenuItem)sender).Font, FontStyle.Bold);
         }
 
@@ -319,7 +319,7 @@ namespace LittleBrother
             {
                 string newProject = ((ToolStripTextBox)sender).Text;
                 Ini.AddToArray(Program.secGeneral, "TaskNames", newProject, Unique.IGNORECASE);
-                TimerFile.addStartItem(newProject);
+                TimerFile.Instance.addStartItem(newProject);
                 ((ContextMenuStrip)(((ToolStripTextBox)sender).Owner)).Close();
             }
         }
@@ -329,10 +329,10 @@ namespace LittleBrother
         /// </summary>
         void NewItem_MouseEnter(object sender, EventArgs e)
         {
-            if (((ToolStripTextBox)sender).Text == TextBoxProperties.NewProjectWatermarkText)
+            if (((ToolStripTextBox)sender).Text == Properties.Menu.Default.NewProjectWatermarkText)
             {
                 ((ToolStripTextBox)sender).Text = "";
-                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.NewItemTextColor;
+                ((ToolStripTextBox)sender).ForeColor = HColor.color(Properties.Menu.Default.NewItemTextColor);
             }          
         }
 
@@ -344,8 +344,8 @@ namespace LittleBrother
             if (((ToolStripTextBox)sender).Text == "")
             {
                 ((ContextMenuStrip)(((ToolStripTextBox)sender).Owner)).Focus();
-                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.WatermarkTextColor;
-                ((ToolStripTextBox)sender).Text = TextBoxProperties.NewProjectWatermarkText;
+                ((ToolStripTextBox)sender).ForeColor = HColor.color(Properties.Menu.Default.WatermarkTextColor);
+                ((ToolStripTextBox)sender).Text = Properties.Menu.Default.NewProjectWatermarkText;
             }
                 
         }
@@ -361,7 +361,7 @@ namespace LittleBrother
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Pause_Click(object sender, EventArgs e)
         {
-            TimerFile.addEndItem();
+            TimerFile.Instance.addEndItem();
         }
 
         #endregion Pause events
@@ -375,7 +375,7 @@ namespace LittleBrother
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void PauseAndRemindIn_Click(object sender, EventArgs e)
         {
-            TimerFile.addEndItem();
+            TimerFile.Instance.addEndItem();
             string newInterval = ((ToolStripMenuItem)sender).Text;
             Program.LaunchProjectFormIn(HTime.inMilliseconds(newInterval));
         }
@@ -390,7 +390,7 @@ namespace LittleBrother
             if (e.KeyCode == Keys.Enter)
             {
 
-                TimerFile.addEndItem();
+                TimerFile.Instance.addEndItem();
                 string newInterval = ((ToolStripTextBox)sender).Text;
                 Program.LaunchProjectFormIn(HTime.inMilliseconds(newInterval));
                 ((ContextMenuStrip)((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).OwnerItem.Owner).Close();
@@ -402,10 +402,10 @@ namespace LittleBrother
         /// </summary>
         void NewInterval_MouseEnter(object sender, EventArgs e)
         {
-            if (((ToolStripTextBox)sender).Text == TextBoxProperties.NewIntervalWatermarkText)
+            if (((ToolStripTextBox)sender).Text == Properties.Menu.Default.NewIntervalWatermarkText)
             {
                 ((ToolStripTextBox)sender).Text = "";
-                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.NewItemTextColor;
+                ((ToolStripTextBox)sender).ForeColor = HColor.color(Properties.Menu.Default.NewItemTextColor);
             }
         }
 
@@ -417,8 +417,8 @@ namespace LittleBrother
             if (((ToolStripTextBox)sender).Text == "")
             {
                 ((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).Focus();
-                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.WatermarkTextColor;
-                ((ToolStripTextBox)sender).Text = TextBoxProperties.NewIntervalWatermarkText;
+                ((ToolStripTextBox)sender).ForeColor = HColor.color(Properties.Menu.Default.WatermarkTextColor);
+                ((ToolStripTextBox)sender).Text = Properties.Menu.Default.NewIntervalWatermarkText;
             }
 
         }
@@ -442,10 +442,10 @@ namespace LittleBrother
         /// </summary>
         void ReminderText_MouseEnter(object sender, EventArgs e)
         {
-            if (((ToolStripTextBox)sender).Text == TextBoxProperties.ReminderTextWatermarkText)
+            if (((ToolStripTextBox)sender).Text == Properties.Menu.Default.ReminderTextWatermarkText)
             {
                 ((ToolStripTextBox)sender).Text = "";
-                ((ToolStripTextBox)sender).ForeColor = TextBoxProperties.NewItemTextColor;
+                ((ToolStripTextBox)sender).ForeColor = HColor.color(Properties.Menu.Default.NewItemTextColor);
             }
         }
 
@@ -457,7 +457,7 @@ namespace LittleBrother
             if (((ToolStripTextBox)sender).Text == "")
             {
                 ((ToolStripDropDownMenu)(((ToolStripTextBox)sender).Owner)).Focus();
-                ((ToolStripTextBox)sender).Text = TextBoxProperties.ReminderTextWatermarkText;
+                ((ToolStripTextBox)sender).Text = Properties.Menu.Default.ReminderTextWatermarkText;
             }
             else
             {
@@ -515,8 +515,8 @@ namespace LittleBrother
         private void TimeSheet_Click(object sender, EventArgs e)
         {
             //string current;
-            //if (TimerFile.getLastItem(out current))
-            //    TimerFile.addStartItem(current);
+            //if (TimerFile.Instance.getLastItem(out current))
+            //    TimerFile.Instance.addStartItem(current);
             Program.ShowTimeSheet();
         }
 
@@ -538,7 +538,7 @@ namespace LittleBrother
             }
             else if (file.ToUpper().Equals("TIME FILE"))
             {
-                //file = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
+                //file = Properties.General.Default.FileDir + "\\" + Properties.General.Default.TimerFile;
                 //Process.Start(file);
                 Process.Start(timerFile);
             }
@@ -600,7 +600,7 @@ namespace LittleBrother
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Exit_Click(object sender, EventArgs e)
 		{
-            TimerFile.addEndItem();
+            TimerFile.Instance.addEndItem();
 
 			// Quit without further ado.
 			Application.Exit();
@@ -636,7 +636,7 @@ namespace LittleBrother
         // Set the style for active item
         private void setItemActive(ToolStripMenuItem item)
         {
-            Color activeItemColor = ColorHelper.color(Settings.Default.ActiveTaskColor);
+            Color activeItemColor = HColor.color(Properties.Menu.Default.ActiveTaskColor);
 
             item.Font = new Font(item.Font, FontStyle.Bold);
             item.BackColor = activeItemColor;
@@ -646,43 +646,4 @@ namespace LittleBrother
 
     }
 
-    class ColorHelper
-    {
-        /// <summary>
-        /// Returns RGB or aRGB color from a string representing a color name or an RGB/aRGB definition 
-        /// </summary>
-        /// <param name="argb">(alpha) Red Green Blue quantities or color name</param>
-        /// <returns></returns>
-        public static Color color(string colorDef)
-        {
-
-            if (colorDef.Contains(","))
-            {
-                string[] returnArray = colorDef.Split(',');
-                int[] argb = new int[returnArray.Length];
-                for (int i = 0; i < returnArray.Length; i++)
-                {
-                    argb[i] = int.Parse(returnArray[i].Trim());
-                }
-                if (argb.Length >= 4)
-                    return Color.FromArgb(argb[0], argb[1], argb[2], argb[3]);
-                else if (argb.Length >= 3)
-                    return Color.FromArgb(argb[0], argb[1], argb[2]);
-                else if (argb.Length >= 1)
-                    return Color.FromArgb(argb[0]);
-            }
-
-            return Color.FromName(colorDef);
-        }
-    }
-
-    struct TextBoxProperties
-    {
-        public static string NewProjectWatermarkText = "Add project...";
-        public static string NewIntervalWatermarkText = "How long?";
-        public static string ReminderTextWatermarkText = "You asked to be reminded of something.";
-        public static string ClearText = "";
-        public static Color WatermarkTextColor = ColorHelper.color("200,200,200");
-        public static Color NewItemTextColor = ColorHelper.color("0,0,0");
-    }
 }

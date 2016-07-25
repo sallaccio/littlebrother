@@ -22,7 +22,7 @@ namespace LittleBrother
 
         #region Public fields
 
-        public static string iniFile = Settings.Default.FileDir + "\\SmallBro.ini";
+        public static string iniFile = Properties.General.Default.FileDir + "\\SmallBro.ini";
 
         // Sections
         public const string secGeneral = "General";
@@ -67,7 +67,7 @@ namespace LittleBrother
 
         public static void checkFiles()
         {
-            Directory.CreateDirectory(Settings.Default.FileDir);
+            Directory.CreateDirectory(Properties.General.Default.FileDir);
             if (!File.Exists(iniFile))
                 File.WriteAllText(iniFile, Resources.DefaultIni);
         }
@@ -91,11 +91,11 @@ namespace LittleBrother
             theTimer.Stop();
 
             string lastProj;
-            if (!TimerFile.getLastItem(out lastProj))
+            if (!TimerFile.Instance.getLastItem(out lastProj))
             {
                 string test = "Little Brother is watching you: Don't forget to choose a project.";
                 string[] taskNames = Ini.GetStringArray(Program.secGeneral, Program.paramTaskNames, "");
-                new MessageForm(test, taskNames, TimerFile.getLastItem()).Show();
+                new MessageForm(test, taskNames, TimerFile.Instance.getLastItem()).Show();
             }
         }
 

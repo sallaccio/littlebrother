@@ -55,13 +55,13 @@
             // 
             // interactionPanel
             // 
-            this.interactionPanel.BackColor = Settings.Default.InteractionPanelColor;
+            this.interactionPanel.BackColor = Properties.General.Default.InteractionPanelColor;
             this.interactionPanel.Controls.Add(this.ok_button);
             this.interactionPanel.Controls.Add(this.later_comboBox);
             this.interactionPanel.Controls.Add(this.or_label);
             this.interactionPanel.Controls.Add(this.remindLater_button);
             this.interactionPanel.Controls.Add(this.selectProject_combobox);
-            this.interactionPanel.DataBindings.Add(new System.Windows.Forms.Binding("BackColor", Settings.Default, "InteractionPanelColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.interactionPanel.DataBindings.Add(new System.Windows.Forms.Binding("BackColor", Properties.General.Default, "InteractionPanelColor", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.interactionPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.interactionPanel.Location = new System.Drawing.Point(0, 154);
             this.interactionPanel.Name = "interactionPanel";
@@ -111,9 +111,9 @@
             // remindLater_button
             // 
             this.remindLater_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.remindLater_button.BackColor = Settings.Default.RemindLaterButton;
+            this.remindLater_button.BackColor = Properties.General.Default.RemindLaterButton;
             this.remindLater_button.Cursor = System.Windows.Forms.Cursors.Default;
-            this.remindLater_button.DataBindings.Add(new System.Windows.Forms.Binding("BackColor", Settings.Default, "RemindLaterButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.remindLater_button.DataBindings.Add(new System.Windows.Forms.Binding("BackColor", Properties.General.Default, "RemindLaterButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.remindLater_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.remindLater_button.Location = new System.Drawing.Point(319, 11);
             this.remindLater_button.Margin = new System.Windows.Forms.Padding(4);

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-
-using IniController;
 using Helpers;
 
 namespace LittleBrother
@@ -50,22 +46,31 @@ namespace LittleBrother
         }
     }
 
-    static class TimerFile
+    public class TimerFile
     {
 
-        #region Private fields
+        private static TimerFile instance = new TimerFile();
 
-        private static string timerFile = Settings.Default.FileDir + "\\" + Settings.Default.TimerFile;
+        public static TimerFile Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
 
-        #endregion
+        private string timerFilePath
+        {
+            get { return Properties.General.Default.FileDir + "\\" + Properties.General.Default.TimerFile; }
+        }
 
         #region Public methods
 
-        public static void addStartItem(string taskName)
+        public void addStartItem(string taskName)
         {
             try
             {
-                string lastLine = File.ReadLines(timerFile).Last();
+                string lastLine = File.ReadLines(timerFilePath).Last();
                 if (!lastLine.Split('\t')[1].Contains("END"))
                 {
                     addEndItem();
@@ -76,26 +81,26 @@ namespace LittleBrother
                 // It's OK. File does not exist so test has passed.
             }
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(timerFile, true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(timerFilePath, true))
             {
                 file.WriteLine(DateTime.Now + "\tSTART\t" + taskName);
             }
             AutoSave.Start();
         }
 
-        public static void addEndItem()
+        public void addEndItem()
         {
             addEndItem(DateTime.Now);
         }
 
-        public static void addEndItem(DateTime timestamp)
+        public void addEndItem(DateTime timestamp)
         {
             try
             {
-                string lastLine = File.ReadLines(timerFile).Last();
+                string lastLine = File.ReadLines(timerFilePath).Last();
                 if (!lastLine.Split('\t')[1].Contains("END"))
                 {
-                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(timerFile, true))
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(timerFilePath, true))
                     {
                         file.WriteLine(timestamp + "\tEND\t");
                     }
@@ -109,12 +114,12 @@ namespace LittleBrother
             AutoSave.Stop();
         }
 
-        public static DateTime getFirstDate()
+        public DateTime getFirstDate()
         {
             try
             {
                 DateTime dayOne = DateTime.Today;
-                foreach (string line in File.ReadLines(timerFile))
+                foreach (string line in File.ReadLines(timerFilePath))
                 {
                     DateTime thisLine = DateTime.Parse(line.Split('\t')[0]);
                     if (DateTime.Compare(thisLine, dayOne) < 0)
@@ -131,12 +136,12 @@ namespace LittleBrother
             }
         }
 
-        public static DateTime getLastDate()
+        public DateTime getLastDate()
         {
             try
             {
                 DateTime dayOne = DateTime.MinValue;
-                foreach (string line in File.ReadLines(timerFile))
+                foreach (string line in File.ReadLines(timerFilePath))
                 {
                     DateTime thisLine = DateTime.Parse(line.Split('\t')[0]);
                     if (DateTime.Compare(thisLine, dayOne) > 0)
@@ -157,11 +162,11 @@ namespace LittleBrother
         /// </summary>
         /// <param name="lastItem">Last worked project</param>
         /// <returns>True if current project</returns>
-        public static bool getLastItem(out string lastItem)
+        public bool getLastItem(out string lastItem)
         {
             try
             {
-                string[] lines = File.ReadAllLines(timerFile);
+                string[] lines = File.ReadAllLines(timerFilePath);
                 int l = lines.Length-1;
                 if (lines[l].Split('\t')[1].Contains("START"))
                 {
@@ -184,7 +189,7 @@ namespace LittleBrother
             }
         }
 
-        public static string getLastItem()
+        public string getLastItem()
         {
             string l = "";
             getLastItem(out l);
@@ -192,6 +197,6 @@ namespace LittleBrother
         }
 
         #endregion
-
+        
     }
 }

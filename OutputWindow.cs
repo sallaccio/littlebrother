@@ -46,7 +46,7 @@ namespace LittleBrother
             {
                 mon = currentWeekStart;
             }
-            if (data.computeData(mon) == true || DateTime.Compare(mon,TimerFile.getFirstDate()) > 0)
+            if (data.computeData(mon) == true || DateTime.Compare(mon,TimerFile.Instance.getFirstDate()) > 0)
             {
                 FillTables(data.Week());
             }
@@ -55,7 +55,7 @@ namespace LittleBrother
         private void buttonNextWeek_Click(object sender, EventArgs e)
         {
             DateTime mon = currentWeekStart.AddDays(7);
-            if (data.computeData(mon) == true || DateTime.Compare(mon, TimerFile.getLastDate()) < 0)
+            if (data.computeData(mon) == true || DateTime.Compare(mon, TimerFile.Instance.getLastDate()) < 0)
             {
                 FillTables(data.Week());
             }
