@@ -70,50 +70,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox.cs">
+    <Compile Include="Source\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutBox.Designer.cs">
+    <Compile Include="Source\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComputedData.cs" />
-    <Compile Include="ContextMenus.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="IniController.cs" />
+    <Compile Include="Source\ComputedData.cs" />
+    <Compile Include="Source\ContextMenus.cs" />
+    <Compile Include="Source\Helpers.cs" />
+    <Compile Include="Source\IniController.cs" />
     <Compile Include="Properties\Menu.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Menu.settings</DependentUpon>
     </Compile>
-    <Compile Include="MessageForm.cs">
+    <Compile Include="Source\MessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MessageForm.Designer.cs">
+    <Compile Include="Source\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OutputWindow.cs">
+    <Compile Include="Source\OutputWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OutputWindow.Designer.cs">
+    <Compile Include="Source\OutputWindow.Designer.cs">
       <DependentUpon>OutputWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProcessIcon.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Source\ProcessIcon.cs" />
+    <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TimerFile.cs" />
-    <EmbeddedResource Include="AboutBox.resx">
+    <Compile Include="Source\TimerFile.cs" />
+    <EmbeddedResource Include="Source\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MessageForm.resx">
+    <EmbeddedResource Include="Source\MessageForm.resx">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OutputWindow.resx">
+    <EmbeddedResource Include="Source\OutputWindow.resx">
       <DependentUpon>OutputWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
